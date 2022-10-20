@@ -24,6 +24,7 @@ import org.joda.time.Duration;
 import org.joda.time.Period;
 
 import javax.net.ssl.SSLContext;
+import org.apache.druid.java.util.common.logger.Logger;
 
 /**
  */
@@ -74,6 +75,9 @@ public class HttpClientConfig
   private static final int DEFAULT_WORKER_COUNT = JvmUtils.getRuntimeInfo().getAvailableProcessors() * 2;
 
   private static final Duration DEFAULT_UNUSED_CONNECTION_TIMEOUT_DURATION = new Period("PT4M").toStandardDuration();
+
+  private static final Logger logger 
+            = new Logger(HttpClientConfig.class.getName());
 
   public static Builder builder()
   {

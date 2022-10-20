@@ -22,11 +22,13 @@ package org.apache.druid.query.topn;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.Min;
+import org.apache.druid.java.util.common.logger.Logger;
 
 /**
  */
 public class TopNQueryConfig
 {
+  private static final Logger log = new Logger(TopNQueryConfig.class);
   public static final int DEFAULT_MIN_TOPN_THRESHOLD = 1000;
 
   @JsonProperty
@@ -35,6 +37,7 @@ public class TopNQueryConfig
 
   public int getMinTopNThreshold()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.query.topN.minTopNThreshold");
     return minTopNThreshold;
   }
 }

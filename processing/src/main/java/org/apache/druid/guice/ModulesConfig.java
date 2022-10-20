@@ -20,6 +20,7 @@
 package org.apache.druid.guice;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.druid.java.util.common.logger.Logger;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,11 +32,14 @@ public class ModulesConfig
    * ExtensionsConfig#loadList} or the standard list of modules loaded by some node type, e. g. {@code
    * CliPeon}.
    */
+  private static final Logger log = new Logger(ModulesConfig.class);
+
   @JsonProperty
   private List<String> excludeList = Collections.emptyList();
 
   public List<String> getExcludeList()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.modules.excludeList");
     return excludeList;
   }
 
