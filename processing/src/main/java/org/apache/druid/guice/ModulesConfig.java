@@ -24,7 +24,6 @@ import org.apache.druid.java.util.common.logger.Logger;
 
 import java.util.Collections;
 import java.util.List;
-
 public class ModulesConfig
 {
   /**

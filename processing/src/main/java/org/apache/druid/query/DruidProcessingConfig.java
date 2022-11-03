@@ -30,6 +30,9 @@ import org.skife.config.Config;
 
 
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public abstract class DruidProcessingConfig extends ExecutorServiceConfig implements ColumnConfig
 {
@@ -41,11 +44,14 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   public static final int DEFAULT_MERGE_POOL_AWAIT_SHUTDOWN_MILLIS = 60_000;
   public static final int DEFAULT_INITIAL_BUFFERS_FOR_INTERMEDIATE_POOL = 0;
 
+  public static String CTESTFILEPATH = System.getProperty("user.dir").split("/druid/processing/")[0] + "/core-ctest.xml";
+  public static Properties configProps = new Properties();
+    
   private AtomicReference<Integer> computedBufferSizeBytes = new AtomicReference<>();
 
   @Config({"druid.computation.buffer.size", "${base_path}.buffer.sizeBytes"})
   public HumanReadableBytes intermediateComputeSizeBytesConfigured()
-  {
+  { 
     return DEFAULT_PROCESSING_BUFFER_SIZE_BYTES;
   }
 
@@ -108,6 +114,15 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   public int poolCacheMaxCount()
   {
     log.info("[CTEST][GET-PARAM] " + "druid.processing.buffer.poolCacheMaxCount");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.processing.buffer.poolCacheMaxCount") != null){
+        return Integer.parseInt(configProps.getProperty("druid.processing.buffer.poolCacheMaxCount"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return Integer.MAX_VALUE;
   }
 
@@ -118,6 +133,15 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   public int getNumInitalBuffersForIntermediatePool()
   {
     log.info("[CTEST][GET-PARAM] " + "druid.processing.buffer.poolCacheInitialCount" + DEFAULT_INITIAL_BUFFERS_FOR_INTERMEDIATE_POOL);
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.processing.buffer.poolCacheInitialCount") != null){
+        return Integer.parseInt(configProps.getProperty("druid.processing.buffer.poolCacheInitialCount"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return DEFAULT_INITIAL_BUFFERS_FOR_INTERMEDIATE_POOL;
   }
 
@@ -126,12 +150,22 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   public int getNumThreadsConfigured()
   {
     log.info("[CTEST][GET-PARAM] " + "druid.processing.numThreads");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.processing.numThreads") != null){
+        return Integer.parseInt(configProps.getProperty("druid.processing.numThreads"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return DEFAULT_NUM_THREADS;
   }
 
   public int getNumMergeBuffers()
   {
     int numMergeBuffersConfigured = getNumMergeBuffersConfigured();
+    
     if (numMergeBuffersConfigured != DEFAULT_NUM_MERGE_BUFFERS) {
       log.info("[CTEST][SET-PARAM] " + "druid.processing.numMergeBuffers "+"TestNoTrace");
       log.info("[CTEST][GET-PARAM] " + "druid.processing.numMergeBuffers");
@@ -150,7 +184,16 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
    */
   @Config("${base_path}.numMergeBuffers")
   public int getNumMergeBuffersConfigured()
-  {
+  { 
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.processing.numMergeBuffers") != null){
+        return Integer.parseInt(configProps.getProperty("druid.processing.numMergeBuffers"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return DEFAULT_NUM_MERGE_BUFFERS;
   }
 
@@ -159,6 +202,15 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   public int columnCacheSizeBytes()
   {
     log.info("[CTEST][GET-PARAM] " + "druid.processing.columnCache.sizeBytes");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.processing.columnCache.sizeBytes") != null){
+        return Integer.parseInt(configProps.getProperty("druid.processing.columnCache.sizeBytes"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return 0;
   }
 
@@ -166,6 +218,15 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   public boolean isFifo()
   {
     log.info("[CTEST][GET-PARAM] " + "druid.processing.fifo");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.processing.fifo") != null){
+        return Boolean.parseBoolean(configProps.getProperty("druid.processing.fifo"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return true;
   }
 
@@ -173,6 +234,15 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   public String getTmpDir()
   {
     log.info("[CTEST][GET-PARAM] " + "druid.processing.tmpDir");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.processing.tmpDir") != null){
+        return configProps.getProperty("druid.processing.tmpDir");
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return System.getProperty("java.io.tmpdir");
   }
 
@@ -180,6 +250,15 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   public boolean useParallelMergePoolConfigured()
   {
     log.info("[CTEST][GET-PARAM] " + "druid.processing.merge.useParallelMergePool");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.processing.merge.useParallelMergePool") != null){
+        return Boolean.parseBoolean(configProps.getProperty("druid.processing.merge.useParallelMergePool"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return true;
   }
 
@@ -204,6 +283,15 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   public int getMergePoolParallelismConfigured()
   { 
     log.info("[CTEST][GET-PARAM] " + "druid.processing.merge.pool.parallelism");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.processing.merge.pool.parallelism") != null){
+        return Integer.parseInt(configProps.getProperty("druid.processing.merge.pool.parallelism"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return DEFAULT_NUM_THREADS;
   }
 
@@ -222,6 +310,15 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   public long getMergePoolAwaitShutdownMillis()
   {
     log.info("[CTEST][GET-PARAM] " + "druid.processing.merge.pool.awaitShutdownMillis");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.processing.merge.pool.awaitShutdownMillis") != null){
+        return Long.parseLong(configProps.getProperty("druid.processing.merge.pool.awaitShutdownMillis"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return DEFAULT_MERGE_POOL_AWAIT_SHUTDOWN_MILLIS;
   }
 
@@ -230,6 +327,15 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   {
     // assume 2 hyper-threads per core, so that this value is probably by default the number of physical cores
     log.info("[CTEST][GET-PARAM] " + "druid.processing.merge.pool.defaultMaxQueryParallelism");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.processing.merge.pool.defaultMaxQueryParallelism") != null){
+        return Integer.parseInt(configProps.getProperty("druid.processing.merge.pool.defaultMaxQueryParallelism"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return (int) Math.max(JvmUtils.getRuntimeInfo().getAvailableProcessors() * 0.5, 1);
   }
 
@@ -237,6 +343,15 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   public int getMergePoolTargetTaskRunTimeMillis()
   {
     log.info("[CTEST][GET-PARAM] " + "druid.processing.merge.task.targetRunTimeMillis");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.processing.merge.task.targetRunTimeMillis") != null){
+        return Integer.parseInt(configProps.getProperty("druid.processing.merge.task.targetRunTimeMillis"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return ParallelMergeCombiningSequence.DEFAULT_TASK_TARGET_RUN_TIME_MILLIS;
   }
 
@@ -244,6 +359,15 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   public int getMergePoolTaskInitialYieldRows()
   {
     log.info("[CTEST][GET-PARAM] " + "druid.processing.merge.task.initialYieldNumRows");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.processing.merge.task.initialYieldNumRows") != null){
+        return Integer.parseInt(configProps.getProperty("druid.processing.merge.task.initialYieldNumRows"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return ParallelMergeCombiningSequence.DEFAULT_TASK_INITIAL_YIELD_NUM_ROWS;
   }
 
@@ -251,6 +375,15 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   public int getMergePoolSmallBatchRows()
   {
     log.info("[CTEST][GET-PARAM] " + "druid.processing.merge.task.smallBatchNumRows");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.processing.merge.task.targetRunTimeMillis") != null){
+        return Integer.parseInt(configProps.getProperty("druid.processing.merge.task.smallBatchNumRows"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return ParallelMergeCombiningSequence.DEFAULT_TASK_SMALL_BATCH_NUM_ROWS;
   }
 }

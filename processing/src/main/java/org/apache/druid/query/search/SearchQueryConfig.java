@@ -24,12 +24,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.Min;
 
 import org.apache.druid.java.util.common.logger.Logger;
+
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 /**
  */
 public class SearchQueryConfig
 {
   private static final Logger log = new Logger(SearchQueryConfig.class);
   public static final String CTX_KEY_STRATEGY = "searchStrategy";
+
+  public static String CTESTFILEPATH = System.getProperty("user.dir").split("/druid/processing/")[0] + "/core-ctest.xml";
+  public static Properties configProps = new Properties();
 
   @JsonProperty
   @Min(1)
@@ -41,12 +49,30 @@ public class SearchQueryConfig
   public int getMaxSearchLimit()
   {
     log.info("[CTEST][GET-PARAM] " + "druid.query.search.maxSearchLimit");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.query.search.maxSearchLimit") != null){
+        return Integer.parseInt(configProps.getProperty("druid.query.search.maxSearchLimit"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return maxSearchLimit;
   }
 
   public String getSearchStrategy()
   {
     log.info("[CTEST][GET-PARAM] " + "druid.query.search.searchStrategy");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.query.search.searchStrategy") != null){
+        return configProps.getProperty("druid.query.search.searchStrategy");
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return searchStrategy;
   }
 
