@@ -140,36 +140,43 @@ public class GroupByQueryConfig
 
   public String getDefaultStrategy()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.defaultStrategy");
     return defaultStrategy;
   }
 
   public boolean isSingleThreaded()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.singleThreaded");
     return singleThreaded;
   }
 
   public void setSingleThreaded(boolean singleThreaded)
   {
+    logger.info("[CTEST][SET-PARAM] " + "druid.query.groupBy.singleThreaded " + "NoTestTrace");
     this.singleThreaded = singleThreaded;
   }
 
   public int getMaxIntermediateRows()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.maxIntermediateRows");
     return maxIntermediateRows;
   }
 
   public void setMaxIntermediateRows(int maxIntermediateRows)
   {
+    logger.info("[CTEST][SET-PARAM] " + "druid.query.groupBy.maxIntermediateRows " + "NoTestTrace");
     this.maxIntermediateRows = maxIntermediateRows;
   }
 
   public int getMaxResults()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.maxResults");
     return maxResults;
   }
 
   public void setMaxResults(int maxResults)
   {
+    logger.info("[CTEST][SET-PARAM] " + "druid.query.groupBy.maxResults "+ "NoTestTrace");
     this.maxResults = maxResults;
   }
 
@@ -180,11 +187,13 @@ public class GroupByQueryConfig
 
   public float getBufferGrouperMaxLoadFactor()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.bufferGrouperMaxLoadFactor");
     return bufferGrouperMaxLoadFactor;
   }
 
   public int getBufferGrouperInitialBuckets()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.bufferGrouperInitialBuckets");
     return bufferGrouperInitialBuckets;
   }
 
@@ -193,6 +202,7 @@ public class GroupByQueryConfig
    */
   long getConfiguredMaxSelectorDictionarySize()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.maxSelectorDictionarySize");
     return maxSelectorDictionarySize.getBytes();
   }
 
@@ -231,6 +241,7 @@ public class GroupByQueryConfig
    */
   long getConfiguredMaxMergingDictionarySize()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.maxMergingDictionarySize");
     return maxMergingDictionarySize.getBytes();
   }
 
@@ -266,6 +277,7 @@ public class GroupByQueryConfig
 
   public HumanReadableBytes getMaxOnDiskStorage()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.maxOnDiskStorage");
     return maxOnDiskStorage;
   }
 
@@ -279,6 +291,7 @@ public class GroupByQueryConfig
    */
   public HumanReadableBytes getDefaultOnDiskStorage()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.defaultOnDiskStorage");
     return defaultOnDiskStorage.getBytes() < 0L ? getMaxOnDiskStorage() : defaultOnDiskStorage;
   }
 
@@ -294,16 +307,19 @@ public class GroupByQueryConfig
 
   public boolean isForceHashAggregation()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.forceHashAggregation");
     return forceHashAggregation;
   }
 
   public int getIntermediateCombineDegree()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.intermediateCombineDegree");
     return intermediateCombineDegree;
   }
 
   public int getNumParallelCombineThreads()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.numParallelCombineThreads");
     return numParallelCombineThreads;
   }
 
