@@ -20,12 +20,16 @@
 package org.apache.druid.java.util.emitter.core;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.druid.java.util.common.logger.Logger;
 
 import javax.validation.constraints.NotNull;
 
 public class ParametrizedUriEmitterConfig
 {
+  private static final Logger log = new Logger(ParametrizedUriEmitterConfig.class);
   private static final BaseHttpEmittingConfig DEFAULT_HTTP_EMITTING_CONFIG = new BaseHttpEmittingConfig();
+
+  // private static final Logger log = new Logger(ParametrizedUriEmitterConfig.class); //ctest
 
   @NotNull
   @JsonProperty
@@ -36,11 +40,13 @@ public class ParametrizedUriEmitterConfig
 
   public String getRecipientBaseUrlPattern()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.parametrized.recipientBaseUrlPattern");
     return recipientBaseUrlPattern;
   }
 
   public HttpEmitterConfig buildHttpEmitterConfig(String baseUri)
   {
+    log.info("[CTEST][SET-PARAM] " + "druid.emitter.http.recipientBaseUrl " + "NoTestTrace"); //ctest?
     return new HttpEmitterConfig(httpEmittingConfig, baseUri);
   }
 

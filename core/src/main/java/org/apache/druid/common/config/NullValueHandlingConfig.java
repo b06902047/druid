@@ -21,9 +21,11 @@ package org.apache.druid.common.config;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.druid.java.util.common.logger.Logger;
 
 public class NullValueHandlingConfig
 {
+  private static final Logger log = new Logger(NullValueHandlingConfig.class);
   public static final String NULL_HANDLING_CONFIG_STRING = "druid.generic.useDefaultValueForNull";
 
   //added to preserve backward compatibility
@@ -45,6 +47,7 @@ public class NullValueHandlingConfig
   )
   {
     if (useDefaultValuesForNull == null) {
+      
       this.useDefaultValuesForNull = Boolean.valueOf(System.getProperty(NULL_HANDLING_CONFIG_STRING, "true"));
     } else {
       this.useDefaultValuesForNull = useDefaultValuesForNull;
@@ -65,11 +68,13 @@ public class NullValueHandlingConfig
 
   public boolean isIgnoreNullsForStringCardinality()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.generic.ignoreNullsForStringCardinality");
     return ignoreNullsForStringCardinality;
   }
 
   public boolean isUseDefaultValuesForNull()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.generic.useDefaultValueForNull");
     return useDefaultValuesForNull;
   }
 }

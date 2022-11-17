@@ -21,6 +21,7 @@ package org.apache.druid.java.util.emitter.core;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.druid.java.util.common.Pair;
+import org.apache.druid.java.util.common.logger.Logger;
 import org.apache.druid.metadata.PasswordProvider;
 import org.apache.druid.utils.JvmUtils;
 
@@ -29,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 
 public class BaseHttpEmittingConfig
 {
+  private static final Logger log = new Logger(BaseHttpEmittingConfig.class); //ctest
   public static final long DEFAULT_FLUSH_MILLIS = 60 * 1000;
   public static final int DEFAULT_FLUSH_COUNTS = 500;
 
@@ -37,6 +39,8 @@ public class BaseHttpEmittingConfig
   public static final int DEFAULT_BATCH_QUEUE_SIZE_LIMIT;
 
   public static final long TEST_FLUSH_TIMEOUT_MILLIS = TimeUnit.MILLISECONDS.convert(10, TimeUnit.SECONDS);
+
+  // private static final Logger log = new Logger(BaseHttpEmittingConfig.class); //ctest
 
   static {
     Pair<Integer, Integer> batchConfigPair =
@@ -72,7 +76,6 @@ public class BaseHttpEmittingConfig
       queueLimit = 2;
       batchSize = memoryLimit / queueLimit;
     }
-
     return new Pair<>((int) batchSize, (int) queueLimit);
   }
 
@@ -115,51 +118,61 @@ public class BaseHttpEmittingConfig
 
   public long getFlushMillis()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.http.flushMillis");  
     return flushMillis;
   }
 
   public int getFlushCount()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.http.flushCount"); 
     return flushCount;
   }
 
   public long getFlushTimeOut()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.http.flushTimeOut"); 
     return flushTimeOut;
   }
 
   public PasswordProvider getBasicAuthentication()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.http.basicAuthentication"); 
     return basicAuthentication;
   }
 
   public BatchingStrategy getBatchingStrategy()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.http.batchingStrategy"); 
     return batchingStrategy;
   }
 
   public int getMaxBatchSize()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.http.maxBatchSize");
     return maxBatchSize;
   }
 
   public ContentEncoding getContentEncoding()
   {
+     //ctest?
     return contentEncoding;
   }
 
   public int getBatchQueueSizeLimit()
-  {
+  { 
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.http.batchQueueSizeLimit");
     return batchQueueSizeLimit;
   }
 
   public float getHttpTimeoutAllowanceFactor()
   {
+    //ctest?
     return httpTimeoutAllowanceFactor;
   }
 
   public int getMinHttpTimeoutMillis()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.http.minHttpTimeoutMillis");
     return minHttpTimeoutMillis;
   }
 

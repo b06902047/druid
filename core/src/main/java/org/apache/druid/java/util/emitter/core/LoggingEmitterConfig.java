@@ -20,6 +20,7 @@
 package org.apache.druid.java.util.emitter.core;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.druid.java.util.common.logger.Logger;
 
 import javax.validation.constraints.NotNull;
 
@@ -27,6 +28,7 @@ import javax.validation.constraints.NotNull;
  */
 public class LoggingEmitterConfig
 {
+  private static final Logger log = new Logger(LoggingEmitterConfig.class);
   @NotNull
   @JsonProperty
   private String loggerClass = LoggingEmitter.class.getName();
@@ -37,11 +39,13 @@ public class LoggingEmitterConfig
 
   public String getLoggerClass()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.logging.loggerClass");
     return loggerClass;
   }
 
   public String getLogLevel()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.logging.logLevel");
     return logLevel;
   }
 
