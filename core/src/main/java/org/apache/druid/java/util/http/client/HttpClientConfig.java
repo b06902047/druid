@@ -19,17 +19,26 @@
 
 package org.apache.druid.java.util.http.client;
 
+import org.apache.druid.java.util.common.logger.Logger;
 import org.apache.druid.utils.JvmUtils;
 import org.joda.time.Duration;
 import org.joda.time.Period;
 
 import javax.net.ssl.SSLContext;
-import org.apache.druid.java.util.common.logger.Logger;
+
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  */
 public class HttpClientConfig
 {
+  private static final Logger log = new Logger(HttpClientConfig.class);
+
+  public static String CTESTFILEPATH = System.getProperty("user.dir").split("/druid/core/")[0] + "/core-ctest.xml";
+  public static Properties configProps = new Properties();
+
   public enum CompressionCodec
   {
     IDENTITY {
@@ -65,7 +74,7 @@ public class HttpClientConfig
      */
     public abstract String getEncodingString();
   }
-
+  
   public static final CompressionCodec DEFAULT_COMPRESSION_CODEC = CompressionCodec.GZIP;
 
   // Default from NioClientSocketChannelFactory.DEFAULT_BOSS_COUNT, which is private:
@@ -75,9 +84,6 @@ public class HttpClientConfig
   private static final int DEFAULT_WORKER_COUNT = JvmUtils.getRuntimeInfo().getAvailableProcessors() * 2;
 
   private static final Duration DEFAULT_UNUSED_CONNECTION_TIMEOUT_DURATION = new Period("PT4M").toStandardDuration();
-
-  private static final Logger logger 
-            = new Logger(HttpClientConfig.class.getName());
 
   public static Builder builder()
   {
@@ -94,6 +100,7 @@ public class HttpClientConfig
   private final int workerPoolSize;
   private final CompressionCodec compressionCodec;
   private final Duration unusedConnectionTimeoutDuration;
+  
 
   private HttpClientConfig(
       int numConnections,
@@ -122,26 +129,65 @@ public class HttpClientConfig
 
   public int getNumConnections()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.global.http.numConnections");
+
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.global.http.numConnections") != null){
+        return Integer.parseInt(configProps.getProperty("druid.global.http.numConnections"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
+
     return numConnections;
   }
 
   public boolean isEagerInitialization()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.global.http.eagerInitialization");
+
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.global.http.eagerInitialization") != null){
+        return Boolean.parseBoolean(configProps.getProperty("druid.global.http.eagerInitialization"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
+
+    
     return eagerInitialization;
   }
 
   public SSLContext getSslContext()
   {
+    //ctest?
+    // log.info("[CTEST][GET-PARAM] " + "druid.global.http.SslContext??");
     return sslContext;
   }
 
   public HttpClientProxyConfig getProxyConfig()
   {
+    
     return proxyConfig;
   }
 
   public Duration getReadTimeout()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.global.http.readTimeout");
+
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.global.http.readTimeout") != null){
+        return Duration.parse(configProps.getProperty("druid.global.http.readTimeout"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return readTimeout;
   }
 
@@ -162,11 +208,32 @@ public class HttpClientConfig
 
   public CompressionCodec getCompressionCodec()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.global.http.compressionCodec");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.global.http.compressionCodec") != null){
+        return CompressionCodec.valueOf(configProps.getProperty("druid.global.http.compressionCodec"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return compressionCodec;
   }
 
   public Duration getUnusedConnectionTimeoutDuration()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.global.http.unusedConnectionTimeout");
+
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.global.http.numConnections") != null){
+        return Duration.parse(configProps.getProperty("druid.global.http.numConnections"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return unusedConnectionTimeoutDuration;
   }
 
