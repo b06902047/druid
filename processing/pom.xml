@@ -264,7 +264,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
+		<version>3.0.0-M4</version>
+		<configuration>
                         <reportFormat>plain</reportFormat>
                 </configuration>
             </plugin>
