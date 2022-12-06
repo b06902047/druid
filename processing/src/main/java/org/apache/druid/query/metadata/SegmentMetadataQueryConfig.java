@@ -24,13 +24,11 @@ import org.apache.druid.query.metadata.metadata.SegmentMetadataQuery;
 import org.joda.time.Period;
 import org.joda.time.format.ISOPeriodFormat;
 import org.joda.time.format.PeriodFormatter;
-import org.apache.druid.java.util.common.logger.Logger;
 
 import java.util.EnumSet;
 
 public class SegmentMetadataQueryConfig
 {
-  private static final Logger log = new Logger(SegmentMetadataQueryConfig.class);
   private static final String DEFAULT_PERIOD_STRING = "P1W";
   private static final PeriodFormatter ISO_FORMATTER = ISOPeriodFormat.standard();
   private static final EnumSet<SegmentMetadataQuery.AnalysisType> DEFAULT_ANALYSIS_TYPES = EnumSet.of(
@@ -56,19 +54,16 @@ public class SegmentMetadataQueryConfig
 
   public Period getDefaultHistory()
   {
-    log.info("[CTEST][GET-PARAM] " + "druid.query.segmentMetadata.defaultHistory");
     return defaultHistory;
   }
 
   public EnumSet<SegmentMetadataQuery.AnalysisType> getDefaultAnalysisTypes()
   {
-    log.info("[CTEST][GET-PARAM] " + "druid.query.segmentMetadata.defaultAnalysisTypes");
     return defaultAnalysisTypes;
   }
 
   public void setDefaultAnalysisTypes(EnumSet<SegmentMetadataQuery.AnalysisType> defaultAnalysisTypes)
   {
-    log.info("[CTEST][SET-PARAM] " + "druid.query.segmentMetadata.defaultAnalysisTypes " + "NoTestTrace");
     this.defaultAnalysisTypes = defaultAnalysisTypes;
   }
 }
