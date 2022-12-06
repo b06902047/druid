@@ -21,11 +21,20 @@ package org.apache.druid.math.expr;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.druid.java.util.common.logger.Logger;
 
 import javax.annotation.Nullable;
 
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 public class ExpressionProcessingConfig
 {
+  private static final Logger log = new Logger(ExpressionProcessingConfig.class);
+  public static String CTESTFILEPATH = System.getProperty("user.dir").split("/druid/core/")[0] + "/core-ctest.xml";
+  public static Properties configProps = new Properties();
+
   public static final String NESTED_ARRAYS_CONFIG_STRING = "druid.expressions.allowNestedArrays";
   public static final String NULL_HANDLING_LEGACY_LOGICAL_OPS_STRING = "druid.expressions.useStrictBooleans";
   // Coerce arrays to multi value strings
@@ -69,21 +78,35 @@ public class ExpressionProcessingConfig
 
   public boolean allowNestedArrays()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.expressions.allowNestedArrays");
     return allowNestedArrays;
   }
 
   public boolean isUseStrictBooleans()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.expressions.useStrictBooleans");
+
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.expressions.useStrictBooleans") != null){
+        return Boolean.parseBoolean(configProps.getProperty("druid.expressions.useStrictBooleans"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return useStrictBooleans;
   }
 
   public boolean processArraysAsMultiValueStrings()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.expressions.processArraysAsMultiValueStrings");
     return processArraysAsMultiValueStrings;
   }
 
   public boolean isHomogenizeNullMultiValueStringArrays()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.expressions.isHomogenizeNullMultiValueStringArrays");
     return homogenizeNullMultiValueStringArrays;
   }
 

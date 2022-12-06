@@ -24,14 +24,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableSet;
 import org.apache.druid.java.util.common.StringUtils;
+import org.apache.druid.java.util.common.logger.Logger;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import java.util.Properties;
+
 public class HttpInputSourceConfig
 {
+  private static final Logger log = new Logger(HttpInputSourceConfig.class);
+
+  public static String CTESTFILEPATH = System.getProperty("user.dir").split("/druid/core/")[0] + "/core-ctest.xml";
+  public static Properties configProps = new Properties();
+  
   @VisibleForTesting
   public static final Set<String> DEFAULT_ALLOWED_PROTOCOLS = ImmutableSet.of("http", "https");
 
@@ -50,6 +58,17 @@ public class HttpInputSourceConfig
 
   public Set<String> getAllowedProtocols()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.ingestion.http.allowedProtocols");
+
+    // try{
+    //   configProps.load(new FileInputStream(CTESTFILEPATH));
+    //   if(configProps.getProperty("druid.ingestion.http.allowedProtocols") != null){
+    //     return Set<configProps.getProperty("druid.ingestion.http.allowedProtocols")>;
+    //   }
+    // }
+    // catch(IOException e){
+    //     log.info(CTESTFILEPATH);
+    // }
     return allowedProtocols;
   }
 
@@ -69,6 +88,7 @@ public class HttpInputSourceConfig
   @Override
   public int hashCode()
   {
+
     return Objects.hash(allowedProtocols);
   }
 

@@ -21,14 +21,24 @@ package org.apache.druid.java.util.emitter.core;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.druid.java.util.common.Pair;
+import org.apache.druid.java.util.common.logger.Logger;
 import org.apache.druid.metadata.PasswordProvider;
 import org.apache.druid.utils.JvmUtils;
 
 import javax.validation.constraints.Min;
 import java.util.concurrent.TimeUnit;
 
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 public class BaseHttpEmittingConfig
 {
+  private static final Logger log = new Logger(BaseHttpEmittingConfig.class.getName()); //ctest
+
+  public static String CTESTFILEPATH = System.getProperty("user.dir").split("/druid/core/")[0] + "/core-ctest.xml";
+  public static Properties configProps = new Properties();
+  
   public static final long DEFAULT_FLUSH_MILLIS = 60 * 1000;
   public static final int DEFAULT_FLUSH_COUNTS = 500;
 
@@ -37,6 +47,8 @@ public class BaseHttpEmittingConfig
   public static final int DEFAULT_BATCH_QUEUE_SIZE_LIMIT;
 
   public static final long TEST_FLUSH_TIMEOUT_MILLIS = TimeUnit.MILLISECONDS.convert(10, TimeUnit.SECONDS);
+
+  // private static final Logger log = new Logger(BaseHttpEmittingConfig.class); //ctest
 
   static {
     Pair<Integer, Integer> batchConfigPair =
@@ -72,7 +84,6 @@ public class BaseHttpEmittingConfig
       queueLimit = 2;
       batchSize = memoryLimit / queueLimit;
     }
-
     return new Pair<>((int) batchSize, (int) queueLimit);
   }
 
@@ -115,51 +126,138 @@ public class BaseHttpEmittingConfig
 
   public long getFlushMillis()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.http.flushMillis"); 
+    
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.emitter.http.flushMillis") != null){
+        return Long.parseLong(configProps.getProperty("druid.emitter.http.flushMillis"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
+
     return flushMillis;
   }
 
   public int getFlushCount()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.http.flushCount"); 
+    
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.emitter.http.flushCount") != null){
+        return Integer.parseInt(configProps.getProperty("druid.emitter.http.flushCount"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return flushCount;
   }
 
   public long getFlushTimeOut()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.http.flushTimeOut"); 
+
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.emitter.http.flushTimeOut") != null){
+        return Long.parseLong(configProps.getProperty("druid.emitter.http.flushTimeOut"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
+
+    
     return flushTimeOut;
   }
 
   public PasswordProvider getBasicAuthentication()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.http.basicAuthentication"); 
+    
     return basicAuthentication;
   }
 
   public BatchingStrategy getBatchingStrategy()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.http.batchingStrategy"); 
+
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.emitter.http.batchingStrategy") != null){
+        return BatchingStrategy.valueOf(configProps.getProperty("druid.emitter.http.batchingStrategy"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
+
     return batchingStrategy;
   }
 
   public int getMaxBatchSize()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.http.maxBatchSize");
+
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.emitter.http.maxBatchSize") != null){
+        return Integer.parseInt(configProps.getProperty("druid.emitter.http.maxBatchSize"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return maxBatchSize;
   }
 
   public ContentEncoding getContentEncoding()
   {
+     //ctest?
     return contentEncoding;
   }
 
   public int getBatchQueueSizeLimit()
-  {
+  { 
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.http.batchQueueSizeLimit");
+
+    
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.emitter.http.batchQueueSizeLimit") != null){
+        return Integer.parseInt(configProps.getProperty("druid.emitter.http.batchQueueSizeLimit"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
+
     return batchQueueSizeLimit;
   }
 
   public float getHttpTimeoutAllowanceFactor()
   {
+    //ctest?
     return httpTimeoutAllowanceFactor;
   }
 
   public int getMinHttpTimeoutMillis()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.http.minHttpTimeoutMillis");
+
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.emitter.http.minHttpTimeoutMillis") != null){
+        return Integer.parseInt(configProps.getProperty("druid.emitter.http.minHttpTimeoutMillis"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return minHttpTimeoutMillis;
   }
 
