@@ -27,6 +27,9 @@ import org.apache.druid.query.QueryContexts;
 import org.apache.druid.query.groupby.strategy.GroupByStrategySelector;
 import org.apache.druid.utils.JvmUtils;
 
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.IOException;
 /**
  *
  */
@@ -55,6 +58,9 @@ public class GroupByQueryConfig
   private static final String CTX_KEY_INTERMEDIATE_COMBINE_DEGREE = "intermediateCombineDegree";
   private static final String CTX_KEY_NUM_PARALLEL_COMBINE_THREADS = "numParallelCombineThreads";
   private static final String CTX_KEY_MERGE_THREAD_LOCAL = "mergeThreadLocal";
+
+  public static String CTESTFILEPATH = System.getProperty("user.dir").split("/druid/processing/")[0] + "/core-ctest.xml";
+  public static Properties configProps = new Properties();
 
   // Constants for sizing merging and selector dictionaries. Rationale for these constants:
   //  1) In no case do we want total aggregate dictionary size to exceed 40% of max memory.
@@ -140,36 +146,79 @@ public class GroupByQueryConfig
 
   public String getDefaultStrategy()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.defaultStrategy");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.query.groupBy.defaultStrategy") != null){
+        return configProps.getProperty("druid.query.groupBy.defaultStrategy");
+      }
+    }
+    catch(IOException e){
+        logger.info(CTESTFILEPATH);
+    }
     return defaultStrategy;
   }
 
   public boolean isSingleThreaded()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.singleThreaded");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.query.groupBy.singleThreaded") != null){
+        return Boolean.parseBoolean(configProps.getProperty("druid.query.groupBy.singleThreaded"));
+      }
+    }
+    catch(IOException e){
+        logger.info(CTESTFILEPATH);
+    }
     return singleThreaded;
   }
 
   public void setSingleThreaded(boolean singleThreaded)
   {
+    logger.info("[CTEST][SET-PARAM] " + "druid.query.groupBy.singleThreaded " + "NoTestTrace");
     this.singleThreaded = singleThreaded;
   }
 
   public int getMaxIntermediateRows()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.maxIntermediateRows");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.query.groupBy.maxIntermediateRows") != null){
+        return Integer.parseInt(configProps.getProperty("druid.query.groupBy.maxIntermediateRows"));
+      }
+    }
+    catch(IOException e){
+        logger.info(CTESTFILEPATH);
+    }
     return maxIntermediateRows;
   }
 
   public void setMaxIntermediateRows(int maxIntermediateRows)
   {
+    logger.info("[CTEST][SET-PARAM] " + "druid.query.groupBy.maxIntermediateRows " + "NoTestTrace");
     this.maxIntermediateRows = maxIntermediateRows;
   }
 
   public int getMaxResults()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.maxResults");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.query.groupBy.maxResults") != null){
+        return Integer.parseInt(configProps.getProperty("druid.query.groupBy.maxResults"));
+      }
+    }
+    catch(IOException e){
+        logger.info(CTESTFILEPATH);
+    }
     return maxResults;
   }
 
   public void setMaxResults(int maxResults)
   {
+    logger.info("[CTEST][SET-PARAM] " + "druid.query.groupBy.maxResults "+ "NoTestTrace");
     this.maxResults = maxResults;
   }
 
@@ -180,11 +229,31 @@ public class GroupByQueryConfig
 
   public float getBufferGrouperMaxLoadFactor()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.bufferGrouperMaxLoadFactor");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.query.groupBy.bufferGrouperMaxLoadFactor") != null){
+        return Float.parseFloat(configProps.getProperty("druid.query.groupBy.bufferGrouperMaxLoadFactor"));
+      }
+    }
+    catch(IOException e){
+        logger.info(CTESTFILEPATH);
+    }
     return bufferGrouperMaxLoadFactor;
   }
 
   public int getBufferGrouperInitialBuckets()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.bufferGrouperInitialBuckets");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.query.groupBy.bufferGrouperInitialBuckets") != null){
+        return Integer.parseInt(configProps.getProperty("druid.query.groupBy.bufferGrouperInitialBuckets"));
+      }
+    }
+    catch(IOException e){
+        logger.info(CTESTFILEPATH);
+    }
     return bufferGrouperInitialBuckets;
   }
 
@@ -193,6 +262,16 @@ public class GroupByQueryConfig
    */
   long getConfiguredMaxSelectorDictionarySize()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.maxSelectorDictionarySize");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.query.groupBy.maxSelectorDictionarySize") != null){
+        return Long.parseLong(configProps.getProperty("druid.query.groupBy.maxSelectorDictionarySize"));
+      }
+    }
+    catch(IOException e){
+        logger.info(CTESTFILEPATH);
+    }
     return maxSelectorDictionarySize.getBytes();
   }
 
@@ -231,6 +310,16 @@ public class GroupByQueryConfig
    */
   long getConfiguredMaxMergingDictionarySize()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.maxMergingDictionarySize");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.query.groupBy.maxMergingDictionarySize") != null){
+        return Long.parseLong(configProps.getProperty("druid.query.groupBy.maxMergingDictionarySize"));
+      }
+    }
+    catch(IOException e){
+        logger.info(CTESTFILEPATH);
+    }
     return maxMergingDictionarySize.getBytes();
   }
 
@@ -266,6 +355,7 @@ public class GroupByQueryConfig
 
   public HumanReadableBytes getMaxOnDiskStorage()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.maxOnDiskStorage");
     return maxOnDiskStorage;
   }
 
@@ -279,6 +369,7 @@ public class GroupByQueryConfig
    */
   public HumanReadableBytes getDefaultOnDiskStorage()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.defaultOnDiskStorage");
     return defaultOnDiskStorage.getBytes() < 0L ? getMaxOnDiskStorage() : defaultOnDiskStorage;
   }
 
@@ -294,16 +385,46 @@ public class GroupByQueryConfig
 
   public boolean isForceHashAggregation()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.forceHashAggregation");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.query.groupBy.forceHashAggregation") != null){
+        return Boolean.parseBoolean(configProps.getProperty("druid.query.groupBy.forceHashAggregation"));
+      }
+    }
+    catch(IOException e){
+        logger.info(CTESTFILEPATH);
+    }
     return forceHashAggregation;
   }
 
   public int getIntermediateCombineDegree()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.intermediateCombineDegree");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.query.groupBy.intermediateCombineDegree") != null){
+        return Integer.parseInt(configProps.getProperty("druid.query.groupBy.intermediateCombineDegree"));
+      }
+    }
+    catch(IOException e){
+        logger.info(CTESTFILEPATH);
+    }
     return intermediateCombineDegree;
   }
 
   public int getNumParallelCombineThreads()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.numParallelCombineThreads");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.query.groupBy.numParallelCombineThreads") != null){
+        return Integer.parseInt(configProps.getProperty("druid.query.groupBy.numParallelCombineThreads"));
+      }
+    }
+    catch(IOException e){
+        logger.info(CTESTFILEPATH);
+    }
     return numParallelCombineThreads;
   }
 

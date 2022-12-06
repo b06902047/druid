@@ -22,12 +22,22 @@ package org.apache.druid.query.topn;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.Min;
+import org.apache.druid.java.util.common.logger.Logger;
+
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  */
 public class TopNQueryConfig
 {
+  private static final Logger log = new Logger(TopNQueryConfig.class);
   public static final int DEFAULT_MIN_TOPN_THRESHOLD = 1000;
+
+  public static String CTESTFILEPATH = System.getProperty("user.dir").split("/druid/processing/")[0] + "/core-ctest.xml";
+  public static Properties configProps = new Properties();
+
 
   @JsonProperty
   @Min(1)
@@ -35,6 +45,16 @@ public class TopNQueryConfig
 
   public int getMinTopNThreshold()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.query.topN.minTopNThreshold");
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.query.topN.minTopNThreshold") != null){
+        return Integer.parseInt(configProps.getProperty("druid.query.topN.minTopNThreshold"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return minTopNThreshold;
   }
 }
