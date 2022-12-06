@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotNull;
 import java.util.LinkedHashSet;
+import org.apache.druid.java.util.common.logger.Logger;
 
 /**
  */
@@ -51,8 +52,13 @@ public class ExtensionsConfig
   @JsonProperty
   private LinkedHashSet<String> loadList;
 
+  @JsonProperty
+  private static final Logger logger 
+            = new Logger(ExtensionsConfig.class.getName());
+
   public boolean searchCurrentClassloader()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.extensions.searchCurrentClassloader");
     return searchCurrentClassloader;
   }
 
@@ -63,26 +69,31 @@ public class ExtensionsConfig
 
   public boolean isUseExtensionClassloaderFirst()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.extensions.useExtensionClassloaderFirst");
     return useExtensionClassloaderFirst;
   }
 
   public String getHadoopDependenciesDir()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.extensions.hadoopDependenciesDir");
     return hadoopDependenciesDir;
   }
 
   public String getHadoopContainerDruidClasspath()
   {
-    return hadoopContainerDruidClasspath;
+   logger.info("[CTEST][GET-PARAM] " + "druid.extensions.hadoopContainerDruidClasspath");
+   return hadoopContainerDruidClasspath;
   }
 
   public boolean getAddExtensionsToHadoopContainer()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.extensions.addExtensionsToHadoopContainer");
     return addExtensionsToHadoopContainer;
   }
 
   public LinkedHashSet<String> getLoadList()
   {
+    logger.info("[CTEST][GET-PARAM] " + "druid.extensions.loadList");
     return loadList;
   }
 

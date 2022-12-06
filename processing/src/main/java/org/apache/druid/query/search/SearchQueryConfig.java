@@ -23,10 +23,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.Min;
 
+import org.apache.druid.java.util.common.logger.Logger;
 /**
  */
 public class SearchQueryConfig
 {
+  private static final Logger log = new Logger(SearchQueryConfig.class);
   public static final String CTX_KEY_STRATEGY = "searchStrategy";
 
   @JsonProperty
@@ -38,16 +40,19 @@ public class SearchQueryConfig
 
   public int getMaxSearchLimit()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.query.search.maxSearchLimit");
     return maxSearchLimit;
   }
 
   public String getSearchStrategy()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.query.search.searchStrategy");
     return searchStrategy;
   }
 
   public void setSearchStrategy(final String strategy)
   {
+    log.info("[CTEST][SET-PARAM] " + "druid.query.search.searchStrategy " + "NoTestTrace");
     this.searchStrategy = strategy;
   }
 
