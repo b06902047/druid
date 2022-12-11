@@ -20,6 +20,7 @@
 package org.apache.druid.java.util.emitter.core;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.druid.java.util.common.logger.Logger;
 import org.apache.druid.metadata.PasswordProvider;
 
 import javax.validation.constraints.NotNull;
@@ -28,6 +29,7 @@ import javax.validation.constraints.NotNull;
  */
 public class HttpEmitterConfig extends BaseHttpEmittingConfig
 {
+  private static final Logger log = new Logger(HttpEmitterConfig.class);
   @NotNull
   @JsonProperty
   String recipientBaseUrl = null;
@@ -77,48 +79,56 @@ public class HttpEmitterConfig extends BaseHttpEmittingConfig
 
     public Builder setFlushMillis(long flushMillis)
     {
+      log.info("[CTEST][SET-PARAM] " + "druid.emitter.http.flushTimeOut " + "NoTestTrace");
       this.flushMillis = flushMillis;
       return this;
     }
 
     public Builder setFlushTimeout(long flushTimeout)
     {
+      log.info("[CTEST][SET-PARAM] " + "druid.emitter.http.flushTimeOut " + "NoTestTrace");
       this.flushTimeOut = flushTimeout;
       return this;
     }
 
     public Builder setFlushCount(int flushCount)
     {
+      log.info("[CTEST][SET-PARAM] " + "druid.emitter.http.flushCount " + "NoTestTrace");
       this.flushCount = flushCount;
       return this;
     }
 
     public Builder setBasicAuthentication(PasswordProvider basicAuthentication)
     {
+      log.info("[CTEST][SET-PARAM] " + "druid.emitter.http.basicAuthentication " + "NoTestTrace");
       this.basicAuthentication = basicAuthentication;
       return this;
     }
 
     public Builder setBatchingStrategy(BatchingStrategy batchingStrategy)
     {
+      log.info("[CTEST][SET-PARAM] " + "druid.emitter.http.batchingStrategy " + "NoTestTrace");
       this.batchingStrategy = batchingStrategy;
       return this;
     }
 
     public Builder setMaxBatchSize(int maxBatchSize)
     {
+      log.info("[CTEST][SET-PARAM] " + "druid.emitter.http.maxBatchSize " + "NoTestTrace");
       this.maxBatchSize = maxBatchSize;
       return this;
     }
 
     public Builder setContentEncoding(ContentEncoding contentEncoding)
     {
+      log.info("[CTEST][SET-PARAM] " + "druid.broker.http.compressionCodec " + "NoTestTrace");
       this.contentEncoding = contentEncoding;
       return this;
     }
 
     public Builder setBatchQueueSizeLimit(int batchQueueSizeLimit)
     {
+      log.info("[CTEST][SET-PARAM] " + "druid.emitter.http.batchQueueSizeLimit " + "NoTestTrace");
       this.batchQueueSizeLimit = batchQueueSizeLimit;
       return this;
     }

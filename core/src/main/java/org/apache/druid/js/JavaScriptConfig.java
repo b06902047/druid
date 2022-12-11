@@ -22,6 +22,7 @@ package org.apache.druid.js;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.druid.guice.annotations.PublicApi;
+import org.apache.druid.java.util.common.logger.Logger;
 
 /**
  * Should be used by extension filters, aggregators, etc, that use JavaScript to determine if JavaScript is enabled
@@ -30,6 +31,7 @@ import org.apache.druid.guice.annotations.PublicApi;
 @PublicApi
 public class JavaScriptConfig
 {
+  private static final Logger log = new Logger(JavaScriptConfig.class);
   public static final int DEFAULT_OPTIMIZATION_LEVEL = 9;
 
   private static final JavaScriptConfig ENABLED_INSTANCE = new JavaScriptConfig(true);
@@ -47,6 +49,7 @@ public class JavaScriptConfig
 
   public boolean isEnabled()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.javascript.enabled");
     return enabled;
   }
 

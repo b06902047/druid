@@ -21,11 +21,13 @@ package org.apache.druid.math.expr;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.druid.java.util.common.logger.Logger;
 
 import javax.annotation.Nullable;
 
 public class ExpressionProcessingConfig
 {
+  private static final Logger log = new Logger(ExpressionProcessingConfig.class);
   public static final String NESTED_ARRAYS_CONFIG_STRING = "druid.expressions.allowNestedArrays";
   public static final String NULL_HANDLING_LEGACY_LOGICAL_OPS_STRING = "druid.expressions.useStrictBooleans";
   // Coerce arrays to multi value strings
@@ -69,21 +71,25 @@ public class ExpressionProcessingConfig
 
   public boolean allowNestedArrays()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.expressions.allowNestedArrays");
     return allowNestedArrays;
   }
 
   public boolean isUseStrictBooleans()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.expressions.useStrictBooleans");
     return useStrictBooleans;
   }
 
   public boolean processArraysAsMultiValueStrings()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.expressions.processArraysAsMultiValueStrings");
     return processArraysAsMultiValueStrings;
   }
 
   public boolean isHomogenizeNullMultiValueStringArrays()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.expressions.isHomogenizeNullMultiValueStringArrays");
     return homogenizeNullMultiValueStringArrays;
   }
 

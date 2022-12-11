@@ -19,6 +19,7 @@
 
 package org.apache.druid.java.util.http.client;
 
+import org.apache.druid.java.util.common.logger.Logger;
 import org.apache.druid.utils.JvmUtils;
 import org.joda.time.Duration;
 import org.joda.time.Period;
@@ -29,6 +30,8 @@ import javax.net.ssl.SSLContext;
  */
 public class HttpClientConfig
 {
+  private static final Logger log = new Logger(HttpClientConfig.class);
+
   public enum CompressionCodec
   {
     IDENTITY {
@@ -118,11 +121,13 @@ public class HttpClientConfig
 
   public int getNumConnections()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.global.http.numConnections");
     return numConnections;
   }
 
   public boolean isEagerInitialization()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.global.http.eagerInitialization");
     return eagerInitialization;
   }
 
@@ -138,6 +143,7 @@ public class HttpClientConfig
 
   public Duration getReadTimeout()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.global.http.readTimeout");
     return readTimeout;
   }
 
@@ -158,11 +164,13 @@ public class HttpClientConfig
 
   public CompressionCodec getCompressionCodec()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.global.http.compressionCodec");
     return compressionCodec;
   }
 
   public Duration getUnusedConnectionTimeoutDuration()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.global.http.unusedConnectionTimeout");
     return unusedConnectionTimeoutDuration;
   }
 

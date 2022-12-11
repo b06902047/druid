@@ -20,6 +20,7 @@
 package org.apache.druid.common.config;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.druid.java.util.common.logger.Logger;
 import org.joda.time.Period;
 
 import javax.validation.constraints.NotNull;
@@ -28,6 +29,8 @@ import javax.validation.constraints.NotNull;
  */
 public class ConfigManagerConfig
 {
+  private static final Logger log = new Logger(ConfigManagerConfig.class);
+
   @JsonProperty
   @NotNull
   private Period pollDuration = new Period("PT1M");
@@ -42,6 +45,7 @@ public class ConfigManagerConfig
 
   public boolean isEnableCompareAndSwap()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.manager.config.pollDuration");
     return enableCompareAndSwap;
   }
 }
