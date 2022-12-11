@@ -21,9 +21,18 @@ package org.apache.druid.common.config;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.druid.java.util.common.logger.Logger;
+
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class NullValueHandlingConfig
 {
+  private static final Logger log = new Logger(NullValueHandlingConfig.class);
+  public static String CTESTFILEPATH = System.getProperty("user.dir").split("/druid/core/")[0] + "/core-ctest.xml";
+  public static Properties configProps = new Properties();
+
   public static final String NULL_HANDLING_CONFIG_STRING = "druid.generic.useDefaultValueForNull";
 
   //added to preserve backward compatibility
@@ -65,11 +74,33 @@ public class NullValueHandlingConfig
 
   public boolean isIgnoreNullsForStringCardinality()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.generic.ignoreNullsForStringCardinality");
+
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.generic.ignoreNullsForStringCardinality") != null){
+        return Boolean.parseBoolean(configProps.getProperty("druid.generic.ignoreNullsForStringCardinality"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return ignoreNullsForStringCardinality;
   }
 
   public boolean isUseDefaultValuesForNull()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.generic.useDefaultValueForNull");
+
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.generic.useDefaultValueForNull") != null){
+        return Boolean.parseBoolean(configProps.getProperty("druid.generic.useDefaultValueForNull"));
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return useDefaultValuesForNull;
   }
 }

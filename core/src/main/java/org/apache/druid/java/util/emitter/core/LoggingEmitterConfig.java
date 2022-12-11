@@ -20,13 +20,22 @@
 package org.apache.druid.java.util.emitter.core;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.druid.java.util.common.logger.Logger;
 
 import javax.validation.constraints.NotNull;
+
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  */
 public class LoggingEmitterConfig
 {
+  private static final Logger log = new Logger(LoggingEmitterConfig.class);
+
+  public static String CTESTFILEPATH = System.getProperty("user.dir").split("/druid/core/")[0] + "/core-ctest.xml";
+  public static Properties configProps = new Properties();
   @NotNull
   @JsonProperty
   private String loggerClass = LoggingEmitter.class.getName();
@@ -37,11 +46,33 @@ public class LoggingEmitterConfig
 
   public String getLoggerClass()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.logging.loggerClass");
+
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.emitter.logging.loggerClass") != null){
+        return configProps.getProperty("druid.emitter.logging.loggerClass");
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return loggerClass;
   }
 
   public String getLogLevel()
   {
+    log.info("[CTEST][GET-PARAM] " + "druid.emitter.logging.logLevel");
+
+    try{
+      configProps.load(new FileInputStream(CTESTFILEPATH));
+      if(configProps.getProperty("druid.emitter.logging.logLevel") != null){
+        return configProps.getProperty("druid.emitter.logging.logLevel");
+      }
+    }
+    catch(IOException e){
+        log.info(CTESTFILEPATH);
+    }
     return logLevel;
   }
 
