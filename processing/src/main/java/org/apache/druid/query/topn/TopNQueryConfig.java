@@ -45,7 +45,6 @@ public class TopNQueryConfig
 
   public int getMinTopNThreshold()
   {
-    log.info("[CTEST][GET-PARAM] " + "druid.query.topN.minTopNThreshold");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.query.topN.minTopNThreshold") != null){

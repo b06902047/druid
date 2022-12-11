@@ -48,7 +48,6 @@ public class SearchQueryConfig
 
   public int getMaxSearchLimit()
   {
-    log.info("[CTEST][GET-PARAM] " + "druid.query.search.maxSearchLimit");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.query.search.maxSearchLimit") != null){
@@ -63,7 +62,6 @@ public class SearchQueryConfig
 
   public String getSearchStrategy()
   {
-    log.info("[CTEST][GET-PARAM] " + "druid.query.search.searchStrategy");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.query.search.searchStrategy") != null){
@@ -78,7 +76,6 @@ public class SearchQueryConfig
 
   public void setSearchStrategy(final String strategy)
   {
-    log.info("[CTEST][SET-PARAM] " + "druid.query.search.searchStrategy " + "NoTestTrace");
     this.searchStrategy = strategy;
   }
 

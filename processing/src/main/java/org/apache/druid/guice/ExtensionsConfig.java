@@ -66,7 +66,6 @@ public class ExtensionsConfig
 
   public boolean searchCurrentClassloader()
   {
-    logger.info("[CTEST][GET-PARAM] " + "druid.extensions.searchCurrentClassloader");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.extensions.searchCurrentClassloader") != null){
@@ -86,7 +85,6 @@ public class ExtensionsConfig
 
   public boolean isUseExtensionClassloaderFirst()
   {
-    logger.info("[CTEST][GET-PARAM] " + "druid.extensions.useExtensionClassloaderFirst");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.extensions.useExtensionClassloaderFirst") != null){
@@ -101,7 +99,6 @@ public class ExtensionsConfig
 
   public String getHadoopDependenciesDir()
   {
-    logger.info("[CTEST][GET-PARAM] " + "druid.extensions.hadoopDependenciesDir");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.extensions.hadoopDependenciesDir") != null){
@@ -116,8 +113,7 @@ public class ExtensionsConfig
 
   public String getHadoopContainerDruidClasspath()
   {
-   logger.info("[CTEST][GET-PARAM] " + "druid.extensions.hadoopContainerDruidClasspath");
-   try{
+    try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.extensions.hadoopContainerDruidClasspath") != null){
         return configProps.getProperty("druid.extensions.hadoopContainerDruidClasspath");
@@ -131,7 +127,6 @@ public class ExtensionsConfig
 
   public boolean getAddExtensionsToHadoopContainer()
   {
-    logger.info("[CTEST][GET-PARAM] " + "druid.extensions.addExtensionsToHadoopContainer");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.extensions.addExtensionsToHadoopContainer") != null){
@@ -146,7 +141,6 @@ public class ExtensionsConfig
 
   public LinkedHashSet<String> getLoadList()
   {
-    logger.info("[CTEST][GET-PARAM] " + "druid.extensions.loadList");
     return loadList;
   }
 

@@ -146,7 +146,6 @@ public class GroupByQueryConfig
 
   public String getDefaultStrategy()
   {
-    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.defaultStrategy");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.query.groupBy.defaultStrategy") != null){
@@ -161,7 +160,6 @@ public class GroupByQueryConfig
 
   public boolean isSingleThreaded()
   {
-    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.singleThreaded");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.query.groupBy.singleThreaded") != null){
@@ -176,13 +174,11 @@ public class GroupByQueryConfig
 
   public void setSingleThreaded(boolean singleThreaded)
   {
-    logger.info("[CTEST][SET-PARAM] " + "druid.query.groupBy.singleThreaded " + "NoTestTrace");
     this.singleThreaded = singleThreaded;
   }
 
   public int getMaxIntermediateRows()
   {
-    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.maxIntermediateRows");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.query.groupBy.maxIntermediateRows") != null){
@@ -197,13 +193,11 @@ public class GroupByQueryConfig
 
   public void setMaxIntermediateRows(int maxIntermediateRows)
   {
-    logger.info("[CTEST][SET-PARAM] " + "druid.query.groupBy.maxIntermediateRows " + "NoTestTrace");
     this.maxIntermediateRows = maxIntermediateRows;
   }
 
   public int getMaxResults()
   {
-    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.maxResults");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.query.groupBy.maxResults") != null){
@@ -218,7 +212,6 @@ public class GroupByQueryConfig
 
   public void setMaxResults(int maxResults)
   {
-    logger.info("[CTEST][SET-PARAM] " + "druid.query.groupBy.maxResults "+ "NoTestTrace");
     this.maxResults = maxResults;
   }
 
@@ -229,7 +222,6 @@ public class GroupByQueryConfig
 
   public float getBufferGrouperMaxLoadFactor()
   {
-    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.bufferGrouperMaxLoadFactor");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.query.groupBy.bufferGrouperMaxLoadFactor") != null){
@@ -244,7 +236,6 @@ public class GroupByQueryConfig
 
   public int getBufferGrouperInitialBuckets()
   {
-    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.bufferGrouperInitialBuckets");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.query.groupBy.bufferGrouperInitialBuckets") != null){
@@ -262,7 +253,6 @@ public class GroupByQueryConfig
    */
   long getConfiguredMaxSelectorDictionarySize()
   {
-    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.maxSelectorDictionarySize");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.query.groupBy.maxSelectorDictionarySize") != null){
@@ -310,7 +300,6 @@ public class GroupByQueryConfig
    */
   long getConfiguredMaxMergingDictionarySize()
   {
-    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.maxMergingDictionarySize");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.query.groupBy.maxMergingDictionarySize") != null){
@@ -355,7 +344,6 @@ public class GroupByQueryConfig
 
   public HumanReadableBytes getMaxOnDiskStorage()
   {
-    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.maxOnDiskStorage");
     return maxOnDiskStorage;
   }
 
@@ -369,7 +357,6 @@ public class GroupByQueryConfig
    */
   public HumanReadableBytes getDefaultOnDiskStorage()
   {
-    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.defaultOnDiskStorage");
     return defaultOnDiskStorage.getBytes() < 0L ? getMaxOnDiskStorage() : defaultOnDiskStorage;
   }
 
@@ -385,7 +372,6 @@ public class GroupByQueryConfig
 
   public boolean isForceHashAggregation()
   {
-    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.forceHashAggregation");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.query.groupBy.forceHashAggregation") != null){
@@ -400,7 +386,6 @@ public class GroupByQueryConfig
 
   public int getIntermediateCombineDegree()
   {
-    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.intermediateCombineDegree");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.query.groupBy.intermediateCombineDegree") != null){
@@ -415,7 +400,6 @@ public class GroupByQueryConfig
 
   public int getNumParallelCombineThreads()
   {
-    logger.info("[CTEST][GET-PARAM] " + "druid.query.groupBy.numParallelCombineThreads");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.query.groupBy.numParallelCombineThreads") != null){

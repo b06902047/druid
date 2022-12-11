@@ -59,14 +59,11 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   {
     HumanReadableBytes sizeBytesConfigured = intermediateComputeSizeBytesConfigured();
     if (!DEFAULT_PROCESSING_BUFFER_SIZE_BYTES.equals(sizeBytesConfigured)) {
-      log.info("[CTEST][SET-PARAM] " + "druid.processing.buffer.sizeBytes "+"TestNoTrace");
-      log.info("[CTEST][GET-PARAM] " + "druid.processing.buffer.sizeBytes");
       if (sizeBytesConfigured.getBytes() > Integer.MAX_VALUE) {
         throw new IAE("druid.processing.buffer.sizeBytes must be less than 2GiB");
       }
       return sizeBytesConfigured.getBytesInInt();
     } else if (computedBufferSizeBytes.get() != null) {
-      log.info("[CTEST][GET-PARAM] " + "druid.processing.buffer.sizeBytes");
       return computedBufferSizeBytes.get();
     }
 
@@ -101,7 +98,6 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
       );
     }
 
-    log.info("[CTEST][GET-PARAM] " + "druid.processing.buffer.sizeBytes");
     return computedSizePerBuffer;
   }
 
@@ -113,7 +109,6 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   @Config({"druid.computation.buffer.poolCacheMaxCount", "${base_path}.buffer.poolCacheMaxCount"})
   public int poolCacheMaxCount()
   {
-    log.info("[CTEST][GET-PARAM] " + "druid.processing.buffer.poolCacheMaxCount");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.processing.buffer.poolCacheMaxCount") != null){
@@ -132,7 +127,6 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   })
   public int getNumInitalBuffersForIntermediatePool()
   {
-    log.info("[CTEST][GET-PARAM] " + "druid.processing.buffer.poolCacheInitialCount" + DEFAULT_INITIAL_BUFFERS_FOR_INTERMEDIATE_POOL);
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.processing.buffer.poolCacheInitialCount") != null){
@@ -149,7 +143,6 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   @Config(value = "${base_path}.numThreads")
   public int getNumThreadsConfigured()
   {
-    log.info("[CTEST][GET-PARAM] " + "druid.processing.numThreads");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.processing.numThreads") != null){
@@ -167,11 +160,8 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
     int numMergeBuffersConfigured = getNumMergeBuffersConfigured();
     
     if (numMergeBuffersConfigured != DEFAULT_NUM_MERGE_BUFFERS) {
-      log.info("[CTEST][SET-PARAM] " + "druid.processing.numMergeBuffers "+"TestNoTrace");
-      log.info("[CTEST][GET-PARAM] " + "druid.processing.numMergeBuffers");
       return numMergeBuffersConfigured;
     } else {
-      log.info("[CTEST][GET-PARAM] " + "druid.processing.numMergeBuffers");
       return Math.max(2, getNumThreads() / 4);
     }
   }
@@ -201,7 +191,6 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   @Config(value = "${base_path}.columnCache.sizeBytes")
   public int columnCacheSizeBytes()
   {
-    log.info("[CTEST][GET-PARAM] " + "druid.processing.columnCache.sizeBytes");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.processing.columnCache.sizeBytes") != null){
@@ -217,7 +206,6 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   @Config(value = "${base_path}.fifo")
   public boolean isFifo()
   {
-    log.info("[CTEST][GET-PARAM] " + "druid.processing.fifo");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.processing.fifo") != null){
@@ -233,7 +221,6 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   @Config(value = "${base_path}.tmpDir")
   public String getTmpDir()
   {
-    log.info("[CTEST][GET-PARAM] " + "druid.processing.tmpDir");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.processing.tmpDir") != null){
@@ -249,7 +236,6 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   @Config(value = "${base_path}.merge.useParallelMergePool")
   public boolean useParallelMergePoolConfigured()
   {
-    log.info("[CTEST][GET-PARAM] " + "druid.processing.merge.useParallelMergePool");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.processing.merge.useParallelMergePool") != null){
@@ -282,7 +268,6 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   @Config(value = "${base_path}.merge.pool.parallelism")
   public int getMergePoolParallelismConfigured()
   { 
-    log.info("[CTEST][GET-PARAM] " + "druid.processing.merge.pool.parallelism");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.processing.merge.pool.parallelism") != null){
@@ -309,7 +294,6 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   @Config(value = "${base_path}.merge.pool.awaitShutdownMillis")
   public long getMergePoolAwaitShutdownMillis()
   {
-    log.info("[CTEST][GET-PARAM] " + "druid.processing.merge.pool.awaitShutdownMillis");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.processing.merge.pool.awaitShutdownMillis") != null){
@@ -326,7 +310,6 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   public int getMergePoolDefaultMaxQueryParallelism()
   {
     // assume 2 hyper-threads per core, so that this value is probably by default the number of physical cores
-    log.info("[CTEST][GET-PARAM] " + "druid.processing.merge.pool.defaultMaxQueryParallelism");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.processing.merge.pool.defaultMaxQueryParallelism") != null){
@@ -342,7 +325,6 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   @Config(value = "${base_path}.merge.task.targetRunTimeMillis")
   public int getMergePoolTargetTaskRunTimeMillis()
   {
-    log.info("[CTEST][GET-PARAM] " + "druid.processing.merge.task.targetRunTimeMillis");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.processing.merge.task.targetRunTimeMillis") != null){
@@ -358,7 +340,6 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   @Config(value = "${base_path}.merge.task.initialYieldNumRows")
   public int getMergePoolTaskInitialYieldRows()
   {
-    log.info("[CTEST][GET-PARAM] " + "druid.processing.merge.task.initialYieldNumRows");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.processing.merge.task.initialYieldNumRows") != null){
@@ -374,7 +355,6 @@ public abstract class DruidProcessingConfig extends ExecutorServiceConfig implem
   @Config(value = "${base_path}.merge.task.smallBatchNumRows")
   public int getMergePoolSmallBatchRows()
   {
-    log.info("[CTEST][GET-PARAM] " + "druid.processing.merge.task.smallBatchNumRows");
     try{
       configProps.load(new FileInputStream(CTESTFILEPATH));
       if(configProps.getProperty("druid.processing.merge.task.targetRunTimeMillis") != null){
